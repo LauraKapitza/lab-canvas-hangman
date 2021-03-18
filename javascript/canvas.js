@@ -5,7 +5,8 @@ class HangmanCanvas {
   }
 
   createBoard() {
-    // ... your code goes here
+    this.context.clearRect();
+    drawLines();
   }
 
   drawLines() {

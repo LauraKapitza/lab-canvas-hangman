@@ -1,35 +1,57 @@
 class Hangman {
   constructor(words) {
     this.words = words;
-    // ... your code goes here
+    this.secretWord = this.pickWord();
+    this.letters = [];
+    this.guessedLetters = "";
+    this.errorsLeft = 8;
   }
 
   pickWord() {
-    // ... your code goes here
+    let i = Math.floor(Math.random() * this.words.length); //create random index
+    this.secretWord = this.words[i];
+    return this.words[i] //return word at i position from array
   }
 
-  checkIfLetter(keyCode) {
-    // ... your code goes here
+  checkIfLetter(keyCode) { 
+    if (keyCode >= 'a' && keyCode <= 'z') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   checkClickedLetters(letter) {
-    // ... your code goes here
+    if (this.letters.includes(letter)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   addCorrectLetter(letter) {
-    // ... your code goes here
+    this.guessedLetters += letter;
+    this.checkWinner();
   }
 
   addWrongLetter(letter) {
-    // ... your code goes here
+    this.errorsLeft--;
   }
 
   checkGameOver() {
-    // ... your code goes here
+    if (this.errorsLeft === 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   checkWinner() {
-    // ... your code goes here
+    if (this.guessedLetters.length == this.secretWord.length) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
@@ -41,9 +63,8 @@ if (startGameButton) {
   startGameButton.addEventListener('click', event => {
     hangman = new Hangman(['node', 'javascript', 'react', 'miami', 'paris', 'amsterdam', 'lisboa']);
 
-    // HINT (uncomment when start working on the canvas portion of the lab)
-    // hangman.secretWord = hangman.pickWord();
-    // hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+    hangman.secretWord = hangman.pickWord();
+    hangmanCanvas = new HangmanCanvas(hangman.secretWord);
 
     // ... your code goes here
   });
@@ -51,5 +72,5 @@ if (startGameButton) {
 
 document.addEventListener('keydown', event => {
   // React to user pressing a key
-  // ... your code goes here
+  checkIfLetter(event.code);
 });
